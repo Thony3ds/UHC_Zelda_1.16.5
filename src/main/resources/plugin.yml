@@ -1,0 +1,9 @@
+name: UHC_Zelda
+version: '1.0-SNAPSHOT'
+main: org.thony3ds.uHC_Zelda.UHC_Zelda
+api-version: '1.16'
+commands:
+  uz_start:
+    description: Lance une partie
+    usage: /uz_start
+    permission: UHC_Zelda.uz_start
