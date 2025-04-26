@@ -10,6 +10,7 @@ public final class Uz_start implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
         commandSender.sendMessage("Lancement de l'UHC...");
+
         return true;
     }
 }
