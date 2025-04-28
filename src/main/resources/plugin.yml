@@ -6,4 +6,15 @@ commands:
   uz_start:
     description: Lance une partie
     usage: /uz_start
-    permission: UHC_Zelda.uz_start
+    permission: uhc.op
+  uz_class:
+    description: Choisi ta classe !
+    usage: /uz_class
+  uz_team:
+    description: Choisi ta team !
+    usage: /uz_team
+
+permissions:
+  uhc.op:
+    description: permission level op
+    default: op
