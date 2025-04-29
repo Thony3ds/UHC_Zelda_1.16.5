@@ -47,7 +47,6 @@ public final class Uz_start implements CommandExecutor {
                     }
                 }else if (secondes == 60){
                     Bukkit.broadcastMessage("Les Triforces sont apparus !");
-                    Bukkit.getWorlds().get(0).setPVP(true);
                     UHC_Zelda.episode++;
                     String subTitle = "Les Triforces sont apparus !";
                     itemManager.setItemInChest(Bukkit.getWorlds().get(0),3,63,3,itemManager.getItemByName("triforce_courage"));
@@ -65,9 +64,19 @@ public final class Uz_start implements CommandExecutor {
                     }
                 }else if (secondes == 90){
                     Bukkit.broadcastMessage("Rétrecicement de l'anneau !");
-                    Bukkit.getWorlds().get(0).setPVP(true);
                     UHC_Zelda.episode++;
                     String subTitle = "Le monde s'écroule !"; //TODO
+
+                    double targetSize = 100.0;
+                    World world = Bukkit.getWorlds().get(0);
+                    WorldBorder border = world.getWorldBorder();
+                    long time = (long) (border.getSize()-targetSize);
+
+                    border.setSize(targetSize, time);
+                    BorderShrinkManager shrink = new BorderShrinkManager(
+                            Bukkit.getWorlds().get(0), 2001, 101, 1900
+                    );
+                    shrink.start();
 
                     for (Player player: Bukkit.getOnlinePlayers()){
                         player.setHealth(Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue());
@@ -85,7 +94,7 @@ public final class Uz_start implements CommandExecutor {
         World world = Bukkit.getWorlds().get(0);
         WorldBorder worldBorder = world.getWorldBorder();
         worldBorder.setCenter(0, 0);
-        worldBorder.setSize(2000);
+        worldBorder.setSize(2001);
         worldBorder.setDamageBuffer(5);
         worldBorder.setDamageAmount(1);
 
