@@ -40,7 +40,7 @@ public final class Uz_start implements CommandExecutor {
                     Bukkit.broadcastMessage("Le PVP est maintenant activé !");
                     Bukkit.getWorlds().get(0).setPVP(true);
                     UHC_Zelda.episode++;
-                    String subTitle = "PVP et Structures activés !";
+                    String subTitle = "PVP et Structures activés !"; //TODO all structures and triforces structures
 
                     for (Player player: Bukkit.getOnlinePlayers()){
                         player.sendTitle("Episode 2", subTitle, 30, 50, 40);
@@ -59,13 +59,22 @@ public final class Uz_start implements CommandExecutor {
                     Location triforceSagesseLoc = new Location(Bukkit.getWorlds().get(0), 3, 63, 3);
                     TriforceTracker.setLocation("Triforce de la Sagesse", triforceSagesseLoc);
 
+                    UHC_Zelda.victoryManager = new VictoryManager(UHC_Zelda.instance);
+
+                    new BukkitRunnable(){
+                        @Override
+                        public void run(){
+                            UHC_Zelda.victoryManager.checkForVictoryStart();
+                        }
+                    }.runTaskTimer(UHC_Zelda.instance, 0L, 100L);
+
                     for (Player player: Bukkit.getOnlinePlayers()){
                         player.sendTitle("Episode 3", subTitle, 30, 50, 40);
                     }
                 }else if (secondes == 90){
                     Bukkit.broadcastMessage("Rétrecicement de l'anneau !");
                     UHC_Zelda.episode++;
-                    String subTitle = "Le monde s'écroule !"; //TODO
+                    String subTitle = "Le monde s'écroule !";
 
                     double targetSize = 100.0;
                     World world = Bukkit.getWorlds().get(0);

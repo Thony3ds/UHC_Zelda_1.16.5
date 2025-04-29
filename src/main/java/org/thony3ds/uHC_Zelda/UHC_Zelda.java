@@ -27,6 +27,7 @@ public final class UHC_Zelda extends JavaPlugin implements Listener {
     public Uz_get_item uz_get_item = new Uz_get_item();
     public ItemListener itemListener = new ItemListener();
     public TriforceTracker triforceTracker = new TriforceTracker();
+    public static VictoryManager victoryManager;
 
     // Init vars
     public static int seconds = 0;

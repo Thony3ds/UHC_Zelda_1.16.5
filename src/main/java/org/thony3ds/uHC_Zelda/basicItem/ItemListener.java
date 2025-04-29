@@ -48,11 +48,11 @@ public final class ItemListener implements Listener {
             Location triforceLocation = TriforceTracker.getLocation(tri);
             double distance = player.getLocation().distance(triforceLocation);
             if (tri == "Triforce du Courage") {
-                player.sendMessage(ChatColor.GREEN + "La Triforce est à " + (int) distance + " blocs de toi !");
+                player.sendMessage(ChatColor.GREEN + "La Triforce Courage est à " + (int) distance + " blocs de toi !");
             }else if (tri == "Triforce de la Force"){
-                player.sendMessage(ChatColor.RED + "La Triforce est à " + (int) distance + " blocs de toi !");
+                player.sendMessage(ChatColor.RED + "La Triforce Force est à " + (int) distance + " blocs de toi !");
             }else{
-                player.sendMessage(ChatColor.BLUE + "La Triforce est à " + (int) distance + " blocs de toi !");
+                player.sendMessage(ChatColor.BLUE + "La Triforce Sagesse est à " + (int) distance + " blocs de toi !");
             }
         }
     }
