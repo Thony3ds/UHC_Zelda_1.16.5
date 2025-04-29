@@ -1,4 +1,4 @@
-package org.thony3ds.uHC_Zelda;
+package org.thony3ds.uHC_Zelda.basicItem;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

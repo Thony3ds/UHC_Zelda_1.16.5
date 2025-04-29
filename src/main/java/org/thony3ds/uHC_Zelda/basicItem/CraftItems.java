@@ -1,4 +1,4 @@
-package org.thony3ds.uHC_Zelda;
+package org.thony3ds.uHC_Zelda.basicItem;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
+import org.thony3ds.uHC_Zelda.UHC_Zelda;
 
 public final class CraftItems {
 

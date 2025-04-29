@@ -4,6 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.thony3ds.uHC_Zelda.basicItem.ItemManager;
 
 public final class Uz_get_item implements CommandExecutor {
     private ItemManager itemManager = new ItemManager();

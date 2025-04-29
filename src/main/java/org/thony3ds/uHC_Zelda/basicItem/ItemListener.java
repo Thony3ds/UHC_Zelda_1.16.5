@@ -1,4 +1,4 @@
-package org.thony3ds.uHC_Zelda;
+package org.thony3ds.uHC_Zelda.basicItem;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -12,6 +12,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.thony3ds.uHC_Zelda.TriforceTracker;
 
 public final class ItemListener implements Listener {
     private ItemManager itemManager = new ItemManager();
