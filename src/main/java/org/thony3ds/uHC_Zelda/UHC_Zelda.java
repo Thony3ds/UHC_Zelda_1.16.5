@@ -21,6 +21,10 @@ public final class UHC_Zelda extends JavaPlugin implements Listener {
     public Uz_class uzClass = new Uz_class();
     public Uz_team uzTeam = new Uz_team();
     public PlayerManager playerManager = new PlayerManager();
+    public CraftItems craftItems = new CraftItems();
+    public Uz_get_item uz_get_item = new Uz_get_item();
+    public ItemListener itemListener = new ItemListener();
+    public TriforceTracker triforceTracker = new TriforceTracker();
 
     // Init vars
     public static int seconds = 0;
@@ -29,13 +33,17 @@ public final class UHC_Zelda extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         instance = this;
+        craftItems.Init_Crafts();
         getLogger().info("Plugin Activé ! Ne pas oublier d'activer le nether off et gamerule naturalRegeneration false :)");
         //Init command
         Objects.requireNonNull(getCommand("uz_start")).setExecutor(uzStart);
         Objects.requireNonNull(getCommand("uz_class")).setExecutor(uzClass);
         Objects.requireNonNull(getCommand("uz_team")).setExecutor(uzTeam);
+        Objects.requireNonNull(getCommand("uz_get_item")).setExecutor(uz_get_item);
         //Init Listeners
         getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(itemListener, this);
+        getServer().getPluginManager().registerEvents(triforceTracker, this);
         //Init World
         World world = Bukkit.getWorlds().get(0);
         WorldBorder worldBorder = world.getWorldBorder();

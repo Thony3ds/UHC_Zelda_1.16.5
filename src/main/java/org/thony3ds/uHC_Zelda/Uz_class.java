@@ -38,7 +38,7 @@ public final class Uz_class implements CommandExecutor {
                     break;
                 }
 
-            case "gorron":
+            case "zora":
                 if ( joueur != null) {
                     joueur = new Joueur(classe, joueur.getEquipe());
 

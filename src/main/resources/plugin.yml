@@ -13,8 +13,16 @@ commands:
   uz_team:
     description: Choisi ta team !
     usage: /uz_team
+  uz_get_item:
+    description: OP cmd to get an item
+    usage: /uz_get_item
+    permission: uhc.op
 
 permissions:
   uhc.op:
     description: permission level op
     default: op
+
+depend:
+  - WorldEdit
+  - TerraformGenerator
