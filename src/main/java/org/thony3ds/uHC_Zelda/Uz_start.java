@@ -1,9 +1,6 @@
 package org.thony3ds.uHC_Zelda;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.WorldBorder;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,6 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.thony3ds.uHC_Zelda.basicItem.ItemManager;
 
 import java.util.Objects;
+import java.util.Random;
 
 public final class Uz_start implements CommandExecutor {
 
@@ -20,6 +18,9 @@ public final class Uz_start implements CommandExecutor {
     private ItemManager itemManager = new ItemManager();
     private TriforceTracker triforceTracker = new TriforceTracker();
     public int secondes;
+    public Location courageLoc;
+    public Location forceLoc;
+    public Location sagesseLoc;
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
@@ -29,6 +30,32 @@ public final class Uz_start implements CommandExecutor {
         }
 
         commandSender.sendMessage("Lancement de l'UHC...");
+
+        World world = Bukkit.getWorlds().get(0);
+        WorldBorder worldBorder = world.getWorldBorder();
+        worldBorder.setCenter(0, 0);
+        worldBorder.setSize(2001);
+        worldBorder.setDamageBuffer(5);
+        worldBorder.setDamageAmount(1);
+
+        world.setTime(0);
+        world.setStorm(false);
+
+        ExternalPlugins.pasteSchematic(new Location(world, 0, world.getHighestBlockYAt(0, 0), 0), "temple_du_temps");
+        //TODO Random structures + effet quand on approche
+        ExternalPlugins.pasteSchematic(new Location(world, 500, world.getHighestBlockYAt(500, 500), 500), "temple_du_temps");
+        ExternalPlugins.pasteSchematic(new Location(world, 500, world.getHighestBlockYAt(500, -500), -500), "temple_du_temps");
+        ExternalPlugins.pasteSchematic(new Location(world, -500, world.getHighestBlockYAt(-500, 500), 500), "temple_du_temps");
+        ExternalPlugins.pasteSchematic(new Location(world, -500, world.getHighestBlockYAt(-500, -500), -500), "temple_du_temps");
+        // Generate Triforces structures
+        courageLoc = randomLoc(world);
+        forceLoc = randomLoc(world);
+        sagesseLoc = randomLoc(world);
+        ExternalPlugins.pasteSchematic(courageLoc, "temple_du_temps");
+        ExternalPlugins.pasteSchematic(forceLoc, "temple_du_temps");
+        ExternalPlugins.pasteSchematic(sagesseLoc, "temple_du_temps");
+
+        commandSender.sendMessage("Triforces Générées !");
 
         new BukkitRunnable() {
             @Override
@@ -40,7 +67,7 @@ public final class Uz_start implements CommandExecutor {
                     Bukkit.broadcastMessage("Le PVP est maintenant activé !");
                     Bukkit.getWorlds().get(0).setPVP(true);
                     UHC_Zelda.episode++;
-                    String subTitle = "PVP et Structures activés !"; //TODO all structures and triforces structures
+                    String subTitle = "PVP et Structures activés !"; //TODO items in structures
 
                     for (Player player: Bukkit.getOnlinePlayers()){
                         player.sendTitle("Episode 2", subTitle, 30, 50, 40);
@@ -48,7 +75,7 @@ public final class Uz_start implements CommandExecutor {
                 }else if (secondes == 60){
                     Bukkit.broadcastMessage("Les Triforces sont apparus !");
                     UHC_Zelda.episode++;
-                    String subTitle = "Les Triforces sont apparus !";
+                    String subTitle = "Les Triforces sont apparus !"; // TODO remove chest
                     itemManager.setItemInChest(Bukkit.getWorlds().get(0),3,63,3,itemManager.getItemByName("triforce_courage"));
                     itemManager.setItemInChest(Bukkit.getWorlds().get(0),3,63,3,itemManager.getItemByName("triforce_force"));
                     itemManager.setItemInChest(Bukkit.getWorlds().get(0),3,63,3,itemManager.getItemByName("triforce_sagesse"));
@@ -100,18 +127,21 @@ public final class Uz_start implements CommandExecutor {
             }
         }.runTaskTimer(UHC_Zelda.instance, 20L, 20L);
 
-        World world = Bukkit.getWorlds().get(0);
-        WorldBorder worldBorder = world.getWorldBorder();
-        worldBorder.setCenter(0, 0);
-        worldBorder.setSize(2001);
-        worldBorder.setDamageBuffer(5);
-        worldBorder.setDamageAmount(1);
-
-        world.setTime(0);
-        world.setStorm(false);
-
-        ExternalPlugins.pasteSchematic(new Location(world, 0, world.getHighestBlockYAt(0, 0), 0), "temple_du_temps");
-
         return true;
+    }
+    private Location randomLoc(World world){
+        Random random = new Random();
+        int borderLimit = 950;
+
+        int x = random.nextInt(borderLimit*2)-borderLimit;
+        int z = random.nextInt(borderLimit*2)-borderLimit;
+        int y = 5 + random.nextInt(26);
+
+        Material blockType = world.getBlockAt(x, y-1, z).getType();
+        if (blockType == Material.WATER || blockType == Material.LAVA){
+            return randomLoc(world);
+        }
+
+        return new Location(world, x, y, z);
     }
 }

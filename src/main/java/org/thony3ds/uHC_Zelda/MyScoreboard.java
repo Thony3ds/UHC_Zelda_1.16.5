@@ -38,10 +38,10 @@ public final class MyScoreboard {
         Score playerClass = obj.getScore(ChatColor.GREEN + "Classe: "+ChatColor.WHITE + classe);
         playerClass.setScore(3);
 
-        Score spacer2 = obj.getScore(" ");
+        Score spacer2 = obj.getScore(ChatColor.GOLD + "Made by Thony3ds");
         spacer2.setScore(2);
 
-        Score author = obj.getScore(ChatColor.GOLD + "Made by Thony3ds V"+UHC_Zelda.version);
+        Score author = obj.getScore(ChatColor.GOLD + "V"+UHC_Zelda.version);
         author.setScore(1);
 
         player.setScoreboard(board);

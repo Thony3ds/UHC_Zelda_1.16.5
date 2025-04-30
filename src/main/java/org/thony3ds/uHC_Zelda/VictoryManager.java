@@ -13,6 +13,8 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
+import org.thony3ds.uHC_Zelda.basicItem.CraftItems;
+import org.thony3ds.uHC_Zelda.basicItem.ItemManager;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -96,10 +98,13 @@ public class VictoryManager implements Listener {
 
                 if (timeLeft <= 0) {
                     Bukkit.broadcastMessage(player.getName() + " a assemblé la Triforce !");
-                    // TODO : Fin de partie ici
-                    playVictoryParticles(player);
+                    spawnBigVictoryParticles(player);
                     teleportEveryoneToWinner(player);
                     cancelVictory();
+                    ItemManager itemManager = new ItemManager();
+                    player.getInventory().removeItem(itemManager.getItemByName("triforce_courage"));
+                    player.getInventory().removeItem(itemManager.getItemByName("triforce_force"));
+                    player.getInventory().removeItem(itemManager.getItemByName("triforce_sagesse"));
                     return;
                 }
 
@@ -144,7 +149,7 @@ public class VictoryManager implements Listener {
         }
     }
 
-    public void playVictoryParticles(Player winner){
+    public void spawnLiteVictoryParticles(Player winner){
         Location loc = winner.getLocation();
         World world = loc.getWorld();
 
@@ -170,6 +175,43 @@ public class VictoryManager implements Listener {
             }
         }.runTaskTimer(plugin, 0L, 2L);
     }
+
+    public void spawnBigVictoryParticles(Player winner) {
+        Location center = winner.getLocation().add(0, 1, 0);
+        double startingRadius = 6.0;
+        int points = 75;
+
+        World world = center.getWorld();
+
+        new BukkitRunnable() {
+            double currentRadius = startingRadius;
+            int ticks = 0;
+
+            @Override
+            public void run() {
+                if (currentRadius <= 0.5 || ticks >= 100) {
+                    this.cancel();
+                    return;
+                }
+
+                for (int i = 0; i < points; i++) {
+                    double angle = 2 * Math.PI * i / points;
+                    double x = center.getX() + currentRadius * Math.cos(angle);
+                    double z = center.getZ() + currentRadius * Math.sin(angle);
+
+                    double height = 0.5 + (i%10)*0.2; // Environ + 2 blocs
+                    double y = center.getY() + height;
+
+                    Location particleLoc = new Location(world, x, y, z);
+                    world.spawnParticle(Particle.ENCHANTMENT_TABLE, particleLoc, 0, 0, 0, 0, 0);
+                }
+
+                currentRadius -= 0.1; // Se referme progressivement
+                ticks++;
+            }
+        }.runTaskTimer(plugin, 0L, 2L);
+    }
+
     public void teleportEveryoneToWinner(Player winner){
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
         String winnerTeam = getScoreboardLine(winner, 3);
