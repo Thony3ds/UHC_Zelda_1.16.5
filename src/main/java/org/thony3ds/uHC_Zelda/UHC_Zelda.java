@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.thony3ds.uHC_Zelda.basicItem.CraftItems;
 import org.thony3ds.uHC_Zelda.basicItem.ItemListener;
+import org.thony3ds.uHC_Zelda.merchant.MerchantManager;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,6 +30,7 @@ public final class UHC_Zelda extends JavaPlugin implements Listener {
     public TriforceTracker triforceTracker = new TriforceTracker();
     public static VictoryManager victoryManager;
     public Uz_gen_dj uz_gen_dj = new Uz_gen_dj();
+    public MerchantManager merchantManager = new MerchantManager();
 
     // Init vars
     public static int seconds = 0;
@@ -48,6 +50,7 @@ public final class UHC_Zelda extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(itemListener, this);
         getServer().getPluginManager().registerEvents(triforceTracker, this);
+        getServer().getPluginManager().registerEvents(merchantManager, this);
         //Init World
         World world = Bukkit.getWorlds().get(0);
         WorldBorder worldBorder = world.getWorldBorder();

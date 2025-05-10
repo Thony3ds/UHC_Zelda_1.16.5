@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.thony3ds.uHC_Zelda.basicItem.ItemManager;
+import org.thony3ds.uHC_Zelda.merchant.MerchantManager;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.Random;
 public final class Uz_start implements CommandExecutor {
 
     private final UHC_Zelda plugin = UHC_Zelda.getInstance();
+    private final MerchantManager merchantManager = new MerchantManager();
     private ItemManager itemManager = new ItemManager();
     private TriforceTracker triforceTracker = new TriforceTracker();
     public int secondes;
@@ -44,6 +46,10 @@ public final class Uz_start implements CommandExecutor {
         world.setStorm(false);
 
         //TODO Effet quand on approche d'une structure
+
+        //Generate Merchant structures / Merchants
+        //merchantManager.spawnCustomMerchant(location, "Zelda");
+
 
         // Generate Triforces structures
         courageLoc = randomLoc(world);
