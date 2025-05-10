@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.thony3ds.uHC_Zelda.basicItem.ItemManager;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -41,21 +43,17 @@ public final class Uz_start implements CommandExecutor {
         world.setTime(0);
         world.setStorm(false);
 
-        ExternalPlugins.pasteSchematic(new Location(world, 0, world.getHighestBlockYAt(0, 0), 0), "temple_du_temps");
-        //TODO Random structures + effet quand on approche
-        ExternalPlugins.pasteSchematic(new Location(world, 500, world.getHighestBlockYAt(500, 500), 500), "temple_du_temps");
-        ExternalPlugins.pasteSchematic(new Location(world, 500, world.getHighestBlockYAt(500, -500), -500), "temple_du_temps");
-        ExternalPlugins.pasteSchematic(new Location(world, -500, world.getHighestBlockYAt(-500, 500), 500), "temple_du_temps");
-        ExternalPlugins.pasteSchematic(new Location(world, -500, world.getHighestBlockYAt(-500, -500), -500), "temple_du_temps");
+        //TODO Effet quand on approche d'une structure
+
         // Generate Triforces structures
         courageLoc = randomLoc(world);
         forceLoc = randomLoc(world);
         sagesseLoc = randomLoc(world);
-        ExternalPlugins.pasteSchematic(courageLoc, "temple_du_temps");
-        ExternalPlugins.pasteSchematic(forceLoc, "temple_du_temps");
-        ExternalPlugins.pasteSchematic(sagesseLoc, "temple_du_temps");
+        ExternalPlugins.pasteSchematic(courageLoc, "triforceSanctuary");
+        ExternalPlugins.pasteSchematic(forceLoc, "triforceSanctuary");
+        ExternalPlugins.pasteSchematic(sagesseLoc, "triforceSanctuary");
 
-        commandSender.sendMessage("Triforces Générées !");
+        commandSender.sendMessage("Structures Générées !");
 
         new BukkitRunnable() {
             @Override
@@ -75,10 +73,11 @@ public final class Uz_start implements CommandExecutor {
                 }else if (secondes == 60){
                     Bukkit.broadcastMessage("Les Triforces sont apparus !");
                     UHC_Zelda.episode++;
-                    String subTitle = "Les Triforces sont apparus !"; // TODO remove chest
-                    itemManager.setItemInChest(Bukkit.getWorlds().get(0),3,63,3,itemManager.getItemByName("triforce_courage"));
-                    itemManager.setItemInChest(Bukkit.getWorlds().get(0),3,63,3,itemManager.getItemByName("triforce_force"));
-                    itemManager.setItemInChest(Bukkit.getWorlds().get(0),3,63,3,itemManager.getItemByName("triforce_sagesse"));
+                    String subTitle = "Les Triforces sont apparus !";
+                    // TODO remove chest
+                    // itemManager.setItemInChest(Bukkit.getWorlds().get(0),3,63,3,itemManager.getItemByName("triforce_courage"));
+                    //itemManager.setItemInChest(Bukkit.getWorlds().get(0),3,63,3,itemManager.getItemByName("triforce_force"));
+                    //itemManager.setItemInChest(Bukkit.getWorlds().get(0),3,63,3,itemManager.getItemByName("triforce_sagesse"));
                     Location triforceCourageLoc = new Location(Bukkit.getWorlds().get(0), 3, 63, 3);
                     TriforceTracker.setLocation("Triforce du Courage", triforceCourageLoc);
                     Location triforceForceLoc = new Location(Bukkit.getWorlds().get(0), 3, 63, 3);
@@ -136,11 +135,6 @@ public final class Uz_start implements CommandExecutor {
         int x = random.nextInt(borderLimit*2)-borderLimit;
         int z = random.nextInt(borderLimit*2)-borderLimit;
         int y = 5 + random.nextInt(26);
-
-        Material blockType = world.getBlockAt(x, y-1, z).getType();
-        if (blockType == Material.WATER || blockType == Material.LAVA){
-            return randomLoc(world);
-        }
 
         return new Location(world, x, y, z);
     }

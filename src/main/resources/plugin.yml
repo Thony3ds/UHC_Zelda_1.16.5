@@ -17,6 +17,10 @@ commands:
     description: OP cmd to get an item
     usage: /uz_get_item
     permission: uhc.op
+  uz_gen_dj:
+    description: OP cmd to generate structure
+    usage: /uz_gen_dj
+    permission: uhc.op
 
 permissions:
   uhc.op:
